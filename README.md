@@ -16,3 +16,7 @@ An editor for editing Cold Steel 3 tbl files. It only supports the t_magic.tbl f
 ![step2](https://raw.githubusercontent.com/ijedi1234/CS3_TableEditor/screenshots/Images/Image4.PNG)
 3. Click on an option to open its general information.
 ![step3](https://raw.githubusercontent.com/ijedi1234/CS3_TableEditor/screenshots/Images/Image5.PNG)
+4. Open General Info to see the general information you can edit.
+![step4](https://raw.githubusercontent.com/ijedi1234/CS3_TableEditor/screenshots/Images/Image6.PNG)
+5. Status Effects are its own menu. You can shift around the status effects, but you can create no more than 5 status effects. Brave Orders effects are seperate, and are only available for Brave Orders. You can delete a status effect by setting it to NULL.
+![step5](https://raw.githubusercontent.com/ijedi1234/CS3_TableEditor/screenshots/Images/Image7.PNG)
