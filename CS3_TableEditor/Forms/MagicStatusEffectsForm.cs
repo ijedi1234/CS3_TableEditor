@@ -41,11 +41,9 @@ namespace CS3_TableEditor.Forms {
             };
             RegStatusEffectType[] regStatusEffectTypesArray = (RegStatusEffectType[])Enum.GetValues(typeof(RegStatusEffectType));
             Dictionary<short, string> statusEffectTypes = regStatusEffectTypesArray.OrderBy(i => i.ToString()).ToDictionary(i => (short)i, i => i.ToString());
-            //RegStatusEffectID_StrBox.SelectedIndexChanged -= RegStatusEffectID_StrBoxItemChanged;
             regStatusEffectGroupBoxCollection = 
                 new StatusEffectGroupBoxCollection<RegStatusEffect>(regStatusEffects, StatusEffectTooltip, RegStatusEffectsNewBtn, regCollection,
                 regModifySection, statusEffectTypes);
-            //RegStatusEffectID_StrBox.SelectedIndexChanged += RegStatusEffectID_StrBoxItemChanged;
 
             if (magicboRecord != null)
                 boStatusEffects = magicboRecord.BraveOrderEffects.Select(i => new BraveOrderEffect(i.ToBytes())).ToList();
@@ -69,11 +67,9 @@ namespace CS3_TableEditor.Forms {
             };
             BraveOrderEffectType[] boStatusEffectTypesArray = (BraveOrderEffectType[])Enum.GetValues(typeof(BraveOrderEffectType));
             statusEffectTypes = boStatusEffectTypesArray.OrderBy(i => i.ToString()).ToDictionary(i => (short)i, i => i.ToString());
-            BOStatusEffectID_StrBox.SelectedIndexChanged -= BOStatusEffectID_StrBoxItemChanged;
             boStatusEffectGroupBoxCollection = 
                 new StatusEffectGroupBoxCollection<BraveOrderEffect>(boStatusEffects, StatusEffectTooltip, BOStatusEffectsNewBtn, boCollection,
                 boModifySection, statusEffectTypes);
-            BOStatusEffectID_StrBox.SelectedIndexChanged += BOStatusEffectID_StrBoxItemChanged;
         }
 
         private void CancelBtn_Click(object sender, EventArgs e) {
