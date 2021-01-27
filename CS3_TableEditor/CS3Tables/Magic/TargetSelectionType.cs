@@ -16,8 +16,8 @@ namespace CS3_TableEditor.CS3Tables.Magic {
         FREE_LINE_RESIZABLE = 0x12,
         ONE_LINE_FIXED = 0x13,
         FREE_LINE_FIXED = 0x14,
-        ALL_1 = 0x1f,
-        ALL_2 = 0x20,
+        ALL = 0x1f,
+        ALL_ALTERNATE = 0x20,
         DIVINE_SINGLE = 0x32,
         DIVINE_ALL = 0x33
     }

@@ -4,29 +4,32 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Text;
+using System.Linq;
 
 namespace CS3_TableEditor {
     public class CS3TablesGroup {
 
         private string tablesDirectory;
 
-        private MagicTable magic;
-        private StatusTable status;
+        public NameTable Name { get; }
+        public StatusTable Status { get; }
+        public MagicTable Magic { get; }
 
         public CS3TablesGroup() {
             tablesDirectory = ConfigurationManager.AppSettings["CS3TablesLocation"] + Path.DirectorySeparatorChar;
-            status = new StatusTable(tablesDirectory);
-            magic = new MagicTable(tablesDirectory);
+            Name = new NameTable(tablesDirectory);
+            Status = new StatusTable(tablesDirectory, Name);
+            //var nameR = Name.GetRecords().Where(i => i.OwnerID >= 0).OrderBy(i => i.OwnerID).ToList();
+            //var statusR = Status.GetStatusPRecords().ToList();
+            Magic = new MagicTable(tablesDirectory, Name);
         }
 
         public void SaveAll() {
-            byte[] fileAsBytes = magic.ToBytes().ToArray();
-            string fileLocation = tablesDirectory + Path.DirectorySeparatorChar + magic.TABLE_NAME;
+            byte[] fileAsBytes = Magic.ToBytes().ToArray();
+            string fileLocation = tablesDirectory + Path.DirectorySeparatorChar + Magic.TABLE_NAME;
             if (File.Exists(fileLocation)) File.Delete(fileLocation);
             File.WriteAllBytes(fileLocation, fileAsBytes);
         }
-
-        public MagicTable GetMagicTable() { return magic; }
 
     }
 }

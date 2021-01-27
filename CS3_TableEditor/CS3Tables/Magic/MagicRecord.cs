@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using System.Data;
 using CS3_TableEditor.CS3Tables.Magic.StatusEffects;
+using CS3_TableEditor.CS3Tables.Name;
 
 namespace CS3_TableEditor.CS3Tables.Magic {
     public class MagicRecord : TableRecord {
@@ -17,7 +18,15 @@ namespace CS3_TableEditor.CS3Tables.Magic {
         }
 
         public short ID { get; set; }
-        public OwnerType OwnerID { get; set; }
+        public short OwnerID { get; set; }
+        public string OwnerIDString {
+            get {
+                short? playableCharKey = nameTable.PLAYABLE_OWNER_ID_STRING_PAIRS.Keys.FirstOrDefault(i => i == OwnerID);
+                if (playableCharKey == null) return null;
+                string playableCharName = nameTable.PLAYABLE_OWNER_ID_STRING_PAIRS[playableCharKey.Value];
+                return playableCharName;
+            }
+        }
         public string TargetingType { get; set; } = "";
         public ActionIntentType ActionIntent { get; set; }
         public ElementType Element { get; set; }
@@ -47,14 +56,17 @@ namespace CS3_TableEditor.CS3Tables.Magic {
 
         public MagicboRecord MagicboRecord { get; set; }
 
+        private NameTable nameTable;
+
         private MagicType type;
         private byte forAltAttackMode;
         private int unusedField2;
         private SignatureType signatureType;
 
-        public MagicRecord(List<byte> fileData) : base(fileData, false) {
+        public MagicRecord(List<byte> fileData, NameTable nameTable) : base(fileData, false) {
+            this.nameTable = nameTable;
             ID = rbc.ReadShort(fileData, Size);
-            OwnerID = (OwnerType)rbc.ReadShort(fileData, Size);
+            OwnerID = rbc.ReadShort(fileData, Size);
             TargetingType = rbc.GetNullTerminatedString(fileData, Size);
             type = (MagicType)rbc.ReadByte(fileData, Size);
             ActionIntent = (ActionIntentType)rbc.ReadByte(fileData, Size);
@@ -94,7 +106,7 @@ namespace CS3_TableEditor.CS3Tables.Magic {
         public override List<byte> ToBytes() {
             List<byte> bytes = new List<byte>();
             bytes.AddRange(WriteBytesConverter.NumericToBytes(ID));
-            bytes.AddRange(WriteBytesConverter.NumericToBytes((short)OwnerID));
+            bytes.AddRange(WriteBytesConverter.NumericToBytes(OwnerID));
             bytes.AddRange(WriteBytesConverter.NullTerminatedStringToBytes(TargetingType));
             bytes.Add((byte)type); bytes.Add((byte)ActionIntent); bytes.Add((byte)Element);
             bytes.Add(forAltAttackMode); bytes.Add((byte)SelectionType);

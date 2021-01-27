@@ -13,25 +13,28 @@ namespace CS3_TableEditor.CS3Tables {
             get { return "t_status.tbl"; }
         }
 
+        private NameTable nameTable;
+
         private List<StatusPRecord> statusPRecords;
         private List<StatusReviseRecord> statusReviseRecords;
         private List<CharReviseRecord> charReviseRecords;
         private List<GameDifficultyRecord> gameDifficultyRecords;
         private List<FieldAttackDataRecord> fieldAttackDataRecords;
 
-        public StatusTable(string tablesDirectory) : base(tablesDirectory) {
+        public StatusTable(string tablesDirectory, NameTable nameTable) : base(tablesDirectory) {
+            this.nameTable = nameTable;
             List<byte> fileData = FileDataAfterHeaders;
             fileData = ParseStatusPRecords(Headers[0], fileData);
             fileData = ParseStatusReviseRecords(Headers[1], fileData);
             fileData = ParseCharReviseRecords(Headers[2], fileData);
             fileData = ParseGameDifficultyRecords(Headers[3], fileData);
-            fileData = ParseFieldAttackDataRecords(Headers[4], fileData);
+            ParseFieldAttackDataRecords(Headers[4], fileData);
         }
 
         private List<byte> ParseStatusPRecords(HeaderRecord header, List<byte> fileData) {
             statusPRecords = new List<StatusPRecord>();
             for (int i = 0; i < header.InitialSize; i++) {
-                StatusPRecord statusPRecord = new StatusPRecord(fileData);
+                StatusPRecord statusPRecord = new StatusPRecord(fileData, nameTable);
                 statusPRecords.Add(statusPRecord);
                 fileData = fileData.Skip(statusPRecord.Size).ToList();
             }
@@ -87,6 +90,8 @@ namespace CS3_TableEditor.CS3Tables {
             List<byte> bytes = GetHeaderBytes();
             return bytes;
         }
+
+        public List<StatusPRecord> GetStatusPRecords() { return statusPRecords; }
 
     }
 }

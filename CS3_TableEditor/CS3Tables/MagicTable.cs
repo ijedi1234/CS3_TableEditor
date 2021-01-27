@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Linq;
-using CS3_TableEditor.CS3Tables.Magic.FieldEffects;
 using CS3_TableEditor.CS3Tables.Header;
 
 namespace CS3_TableEditor.CS3Tables {
@@ -14,11 +13,14 @@ namespace CS3_TableEditor.CS3Tables {
             get { return "t_magic.tbl"; }
         }
 
+        private NameTable nameTable;
+
         private List<MagicRecord> magicRecords;
         private List<MagicboRecord> magicboRecords;
         private List<BtcalcRecord> btcalcRecords;
 
-        public MagicTable(string tablesDirectory) : base(tablesDirectory) {
+        public MagicTable(string tablesDirectory, NameTable nameTable) : base(tablesDirectory) {
+            this.nameTable = nameTable;
             List<byte> fileData = FileDataAfterHeaders;
             fileData = ParseMagicRecords(Headers[0], fileData);
             fileData = ParseMagicboRecords(Headers[1], fileData);
@@ -28,7 +30,7 @@ namespace CS3_TableEditor.CS3Tables {
         private List<byte> ParseMagicRecords(HeaderRecord header, List<byte> fileData) {
             magicRecords = new List<MagicRecord>();
             for (int i = 0; i < header.InitialSize; i++) {
-                MagicRecord magicRecord = new MagicRecord(fileData);
+                MagicRecord magicRecord = new MagicRecord(fileData, nameTable);
                 magicRecords.Add(magicRecord);
                 fileData = fileData.Skip(magicRecord.Size).ToList();
             }

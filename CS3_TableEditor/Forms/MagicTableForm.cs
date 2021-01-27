@@ -14,9 +14,11 @@ using System.Windows.Forms;
 namespace CS3_TableEditor.Forms {
     public partial class MagicTableForm : Form {
 
+        private NameTable nameTable;
         private MagicTable magicTable;
 
-        public MagicTableForm(MagicTable magicTable) {
+        public MagicTableForm(MagicTable magicTable, NameTable nameTable) {
+            this.nameTable = nameTable;
             InitializeComponent();
             this.magicTable = magicTable;
         }
@@ -115,7 +117,7 @@ namespace CS3_TableEditor.Forms {
             }
             if (selectedItem == null) return;
             MagicRecord magicRecord = magicTable.GetMagicRecords().First(i => selectedItem.CompareKey(i.ID, i.ForAltAttackMode));
-            MagicRecordForm form = new MagicRecordForm(magicRecord);
+            MagicRecordForm form = new MagicRecordForm(magicRecord, nameTable);
             form.ShowDialog();
             selectedItem.UpdateListViewItem(magicRecord);
         }

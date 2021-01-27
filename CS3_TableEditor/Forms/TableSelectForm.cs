@@ -21,8 +21,8 @@ namespace CS3_TableEditor.Forms {
             foreach(Form form in forms) {
                 if (form is MagicTableForm) return;
             }
-            MagicTableForm magicTableForm = new MagicTableForm(cs3Tables.GetMagicTable());
-            magicTableForm.Show();
+            MagicTableForm magicTableForm = new MagicTableForm(cs3Tables.Magic, cs3Tables.Name);
+            if(cs3Tables.Magic != null) magicTableForm.Show();
         }
     }
 }

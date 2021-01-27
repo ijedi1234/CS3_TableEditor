@@ -15,7 +15,7 @@ namespace CS3_TableEditor.Forms {
         private MagicRecord magicRecord;
         private TargetingFlags targetingFlags;
 
-        public MagicRecordForm(MagicRecord magicRecord) {
+        public MagicRecordForm(MagicRecord magicRecord, NameTable nameTable) {
             this.magicRecord = magicRecord;
             InitializeComponent();
 
@@ -24,9 +24,12 @@ namespace CS3_TableEditor.Forms {
             IDBox.Value = magicRecord.ID;
             IDBox.Enabled = false;
 
-            if (((short)magicRecord.OwnerID).ToString() != magicRecord.OwnerID.ToString()) {
-                OwnerBox.DataSource = Enum.GetValues(typeof(OwnerType));
-                OwnerBox.SelectedItem = magicRecord.OwnerID;
+            if (magicRecord.OwnerIDString != null) {
+                Dictionary<short, string> ownerIDMap = nameTable.PLAYABLE_OWNER_ID_STRING_PAIRS;
+                OwnerBox.DataSource = new BindingSource(ownerIDMap, null);
+                OwnerBox.DisplayMember = "Value";
+                OwnerBox.ValueMember = "Key";
+                OwnerBox.SelectedItem = new KeyValuePair<short, string>(magicRecord.OwnerID, magicRecord.OwnerIDString);
             } else { OwnerBox.Enabled = false; }
 
             targetingFlags = new TargetingFlags(magicRecord.TargetingType);
@@ -80,7 +83,7 @@ namespace CS3_TableEditor.Forms {
 
         private void SaveBtn_Click(object sender, EventArgs e) {
             if(OwnerBox.Enabled)
-                magicRecord.OwnerID = (OwnerType)OwnerBox.SelectedItem;
+                magicRecord.OwnerID = ((KeyValuePair<short, string>)OwnerBox.SelectedItem).Key;
             targetingFlags.LoadFlagsFromUI(TargetingFlagsGroupBox, Provide1stLineBox);
             magicRecord.TargetingType = targetingFlags.GetFlags();
             magicRecord.ActionIntent = (ActionIntentType)ActionIntentBox.SelectedItem;
