@@ -14,8 +14,15 @@ namespace CS3_TableEditor.CS3Tables.Magic.StatusEffects {
         protected ReadBytesConverter rbc; //Using a separate version since size is accounted for.
         protected List<byte> data;
 
+        private int uniqueID;
+
+        public abstract void SetID(short value);
         public abstract short GetID();
         public abstract string GetIDString();
+
+        public int UniqueID {
+            get { return uniqueID; }
+        }
 
         public int Argument1 {
             get {
@@ -52,12 +59,14 @@ namespace CS3_TableEditor.CS3Tables.Magic.StatusEffects {
         public StatusEffect() {
             rbc = new ReadBytesConverter();
             data = new List<byte>();
+            uniqueID = new Random().Next();
             for (int i = 0; i < SIZE; i++) data.Add(0);
         }
 
         public StatusEffect(List<byte> statusEffectData) {
             rbc = new ReadBytesConverter();
             data = statusEffectData;
+            uniqueID = new Random().Next();
         }
 
         public List<byte> ToBytes() {
