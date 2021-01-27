@@ -523,6 +523,7 @@
             this.BOStatusEffectsNewBtn.TabIndex = 30;
             this.BOStatusEffectsNewBtn.Text = "Add New";
             this.BOStatusEffectsNewBtn.UseVisualStyleBackColor = true;
+            this.BOStatusEffectsNewBtn.Click += new System.EventHandler(this.BOStatusEffectsNewBtn_Click);
             // 
             // BOStatusEffectID_StrBox
             // 
@@ -619,7 +620,7 @@
             this.BOStatusEffect5MoveLeftBtn.TabIndex = 0;
             this.BOStatusEffect5MoveLeftBtn.Text = "<";
             this.BOStatusEffect5MoveLeftBtn.UseVisualStyleBackColor = true;
-            this.BOStatusEffect5MoveLeftBtn.Click += new System.EventHandler(this.RegStatusEffect5MoveLeftBtn_Click);
+            this.BOStatusEffect5MoveLeftBtn.Click += new System.EventHandler(this.BOStatusEffect5MoveLeftBtn_Click);
             // 
             // BOStatusEffect5TextBox
             // 
@@ -637,7 +638,7 @@
             this.BOStatusEffect5MoveRightBtn.TabIndex = 1;
             this.BOStatusEffect5MoveRightBtn.Text = ">";
             this.BOStatusEffect5MoveRightBtn.UseVisualStyleBackColor = true;
-            this.BOStatusEffect5MoveRightBtn.Click += new System.EventHandler(this.RegStatusEffect5MoveRightBtn_Click);
+            this.BOStatusEffect5MoveRightBtn.Click += new System.EventHandler(this.BOStatusEffect5MoveRightBtn_Click);
             // 
             // BOStatusEffect5ModifyBtn
             // 
@@ -647,7 +648,7 @@
             this.BOStatusEffect5ModifyBtn.TabIndex = 0;
             this.BOStatusEffect5ModifyBtn.Text = "Modify";
             this.BOStatusEffect5ModifyBtn.UseVisualStyleBackColor = true;
-            this.BOStatusEffect5ModifyBtn.Click += new System.EventHandler(this.RegStatusEffect5ModifyBtn_Click);
+            this.BOStatusEffect5ModifyBtn.Click += new System.EventHandler(this.BOStatusEffect5ModifyBtn_Click);
             // 
             // BOStatusEffect4GroupBox
             // 
@@ -671,7 +672,7 @@
             this.BOStatusEffect4MoveLeftBtn.TabIndex = 0;
             this.BOStatusEffect4MoveLeftBtn.Text = "<";
             this.BOStatusEffect4MoveLeftBtn.UseVisualStyleBackColor = true;
-            this.BOStatusEffect4MoveLeftBtn.Click += new System.EventHandler(this.RegStatusEffect4MoveLeftBtn_Click);
+            this.BOStatusEffect4MoveLeftBtn.Click += new System.EventHandler(this.BOStatusEffect4MoveLeftBtn_Click);
             // 
             // BOStatusEffect4TextBox
             // 
@@ -689,7 +690,7 @@
             this.BOStatusEffect4MoveRightBtn.TabIndex = 1;
             this.BOStatusEffect4MoveRightBtn.Text = ">";
             this.BOStatusEffect4MoveRightBtn.UseVisualStyleBackColor = true;
-            this.BOStatusEffect4MoveRightBtn.Click += new System.EventHandler(this.RegStatusEffect4MoveRightBtn_Click);
+            this.BOStatusEffect4MoveRightBtn.Click += new System.EventHandler(this.BOStatusEffect4MoveRightBtn_Click);
             // 
             // BOStatusEffect4ModifyBtn
             // 
@@ -699,7 +700,7 @@
             this.BOStatusEffect4ModifyBtn.TabIndex = 0;
             this.BOStatusEffect4ModifyBtn.Text = "Modify";
             this.BOStatusEffect4ModifyBtn.UseVisualStyleBackColor = true;
-            this.BOStatusEffect4ModifyBtn.Click += new System.EventHandler(this.RegStatusEffect4ModifyBtn_Click);
+            this.BOStatusEffect4ModifyBtn.Click += new System.EventHandler(this.BOStatusEffect4ModifyBtn_Click);
             // 
             // BOStatusEffect2GroupBox
             // 
@@ -723,7 +724,7 @@
             this.BOStatusEffect2MoveLeftBtn.TabIndex = 0;
             this.BOStatusEffect2MoveLeftBtn.Text = "<";
             this.BOStatusEffect2MoveLeftBtn.UseVisualStyleBackColor = true;
-            this.BOStatusEffect2MoveLeftBtn.Click += new System.EventHandler(this.RegStatusEffect2MoveLeftBtn_Click);
+            this.BOStatusEffect2MoveLeftBtn.Click += new System.EventHandler(this.BOStatusEffect2MoveLeftBtn_Click);
             // 
             // BOStatusEffect2MoveRightBtn
             // 
@@ -733,7 +734,7 @@
             this.BOStatusEffect2MoveRightBtn.TabIndex = 1;
             this.BOStatusEffect2MoveRightBtn.Text = ">";
             this.BOStatusEffect2MoveRightBtn.UseVisualStyleBackColor = true;
-            this.BOStatusEffect2MoveRightBtn.Click += new System.EventHandler(this.RegStatusEffect2MoveRightBtn_Click);
+            this.BOStatusEffect2MoveRightBtn.Click += new System.EventHandler(this.BOStatusEffect2MoveRightBtn_Click);
             // 
             // BOStatusEffect2ModifyBtn
             // 
@@ -743,7 +744,7 @@
             this.BOStatusEffect2ModifyBtn.TabIndex = 0;
             this.BOStatusEffect2ModifyBtn.Text = "Modify";
             this.BOStatusEffect2ModifyBtn.UseVisualStyleBackColor = true;
-            this.BOStatusEffect2ModifyBtn.Click += new System.EventHandler(this.RegStatusEffect2ModifyBtn_Click);
+            this.BOStatusEffect2ModifyBtn.Click += new System.EventHandler(this.BOStatusEffect2ModifyBtn_Click);
             // 
             // BOStatusEffect2TextBox
             // 
@@ -775,7 +776,7 @@
             this.BOStatusEffect3MoveLeftBtn.TabIndex = 0;
             this.BOStatusEffect3MoveLeftBtn.Text = "<";
             this.BOStatusEffect3MoveLeftBtn.UseVisualStyleBackColor = true;
-            this.BOStatusEffect3MoveLeftBtn.Click += new System.EventHandler(this.RegStatusEffect3MoveLeftBtn_Click);
+            this.BOStatusEffect3MoveLeftBtn.Click += new System.EventHandler(this.BOStatusEffect3MoveLeftBtn_Click);
             // 
             // BOStatusEffect3TextBox
             // 
@@ -793,7 +794,7 @@
             this.BOStatusEffect3MoveRightBtn.TabIndex = 1;
             this.BOStatusEffect3MoveRightBtn.Text = ">";
             this.BOStatusEffect3MoveRightBtn.UseVisualStyleBackColor = true;
-            this.BOStatusEffect3MoveRightBtn.Click += new System.EventHandler(this.RegStatusEffect3MoveRightBtn_Click);
+            this.BOStatusEffect3MoveRightBtn.Click += new System.EventHandler(this.BOStatusEffect3MoveRightBtn_Click);
             // 
             // BOStatusEffect3ModifyBtn
             // 
@@ -803,7 +804,7 @@
             this.BOStatusEffect3ModifyBtn.TabIndex = 0;
             this.BOStatusEffect3ModifyBtn.Text = "Modify";
             this.BOStatusEffect3ModifyBtn.UseVisualStyleBackColor = true;
-            this.BOStatusEffect3ModifyBtn.Click += new System.EventHandler(this.RegStatusEffect3ModifyBtn_Click);
+            this.BOStatusEffect3ModifyBtn.Click += new System.EventHandler(this.BOStatusEffect3ModifyBtn_Click);
             // 
             // BOStatusEffect1GroupBox
             // 
@@ -844,7 +845,7 @@
             this.BOStatusEffect1MoveRightBtn.TabIndex = 1;
             this.BOStatusEffect1MoveRightBtn.Text = ">";
             this.BOStatusEffect1MoveRightBtn.UseVisualStyleBackColor = true;
-            this.BOStatusEffect1MoveRightBtn.Click += new System.EventHandler(this.RegStatusEffect1MoveRightBtn_Click);
+            this.BOStatusEffect1MoveRightBtn.Click += new System.EventHandler(this.BOStatusEffect1MoveRightBtn_Click);
             // 
             // BOStatusEffect1MoveLeftBtn
             // 
@@ -855,7 +856,7 @@
             this.BOStatusEffect1MoveLeftBtn.TabIndex = 0;
             this.BOStatusEffect1MoveLeftBtn.Text = "<";
             this.BOStatusEffect1MoveLeftBtn.UseVisualStyleBackColor = true;
-            this.BOStatusEffect1MoveLeftBtn.Click += new System.EventHandler(this.RegStatusEffect1MoveLeftBtn_Click);
+            this.BOStatusEffect1MoveLeftBtn.Click += new System.EventHandler(this.BOStatusEffect1MoveLeftBtn_Click);
             // 
             // BOStatusEffectsGroupBox
             // 

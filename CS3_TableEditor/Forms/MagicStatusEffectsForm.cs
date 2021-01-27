@@ -29,7 +29,7 @@ namespace CS3_TableEditor.Forms {
             regStatusEffects = magicRecord.StatusEffects.Select(i => new RegStatusEffect(i.ToBytes())).ToList();
             if(magicboRecord != null)
                 boStatusEffects = magicboRecord.BraveOrderEffects.Select(i => new BraveOrderEffect(i.ToBytes())).ToList();
-            currentIndexDisplayedReg = -1; currentIndexDisplayedBO = -1;
+            currentIndexDisplayedBO = -1;
             InitializeComponent();
 
             List<StatusEffectGroupBoxContents> regCollection = new List<StatusEffectGroupBoxContents> {
@@ -42,20 +42,16 @@ namespace CS3_TableEditor.Forms {
             regStatusEffectGroupBoxCollection = new RegStatusEffectGroupBoxCollection(regStatusEffects, StatusEffectTooltip, RegStatusEffectsNewBtn, regCollection);
             RegStatusEffectID_NumBox.Minimum = short.MinValue;
             RegStatusEffectID_NumBox.Maximum = short.MaxValue;
-            RegStatusEffectID_NumBox.Enabled = false;
             RegStatusEffectType[] regStatusEffectTypesArray = (RegStatusEffectType[])Enum.GetValues(typeof(RegStatusEffectType));
             List<RegStatusEffectType> statusEffectTypes = regStatusEffectTypesArray.OrderBy(i => i.ToString()).ToList();
             RegStatusEffectID_StrBox.DataSource = statusEffectTypes;
-            RegStatusEffectID_StrBox.Enabled = false;
             RegStatusEffectArg1Box.Minimum = int.MinValue;
             RegStatusEffectArg1Box.Maximum = int.MaxValue;
-            RegStatusEffectArg1Box.Enabled = false;
             RegStatusEffectArg2Box.Minimum = int.MinValue;
             RegStatusEffectArg2Box.Maximum = int.MaxValue;
-            RegStatusEffectArg2Box.Enabled = false;
             RegStatusEffectArg3Box.Minimum = int.MinValue;
             RegStatusEffectArg3Box.Maximum = int.MaxValue;
-            RegStatusEffectArg3Box.Enabled = false;
+            DisableRegModifySection();
 
             if(boStatusEffects == null) {
                 BOStatusEffectsGroupBox.Enabled = false; return;
@@ -71,18 +67,14 @@ namespace CS3_TableEditor.Forms {
             boStatusEffectGroupBoxCollection = new BOStatusEffectGroupBoxCollection(boStatusEffects, StatusEffectTooltip, BOStatusEffectsNewBtn, boCollection);
             BOStatusEffectID_NumBox.Minimum = short.MinValue;
             BOStatusEffectID_NumBox.Maximum = short.MaxValue;
-            BOStatusEffectID_NumBox.Enabled = false;
             BOStatusEffectID_StrBox.DataSource = Enum.GetValues(typeof(BraveOrderEffectType));
-            BOStatusEffectID_StrBox.Enabled = false;
             BOStatusEffectArg1Box.Minimum = int.MinValue;
             BOStatusEffectArg1Box.Maximum = int.MaxValue;
-            BOStatusEffectArg1Box.Enabled = false;
             BOStatusEffectArg2Box.Minimum = int.MinValue;
             BOStatusEffectArg2Box.Maximum = int.MaxValue;
-            BOStatusEffectArg2Box.Enabled = false;
             BOStatusEffectArg3Box.Minimum = int.MinValue;
             BOStatusEffectArg3Box.Maximum = int.MaxValue;
-            BOStatusEffectArg3Box.Enabled = false;
+            DisableBOModifySection();
         }
 
         private void SetupRegStatusEffectModifyArea(int index) {
@@ -145,6 +137,24 @@ namespace CS3_TableEditor.Forms {
             Close();
         }
 
+        private void DisableRegModifySection() {
+            currentIndexDisplayedReg = -1;
+            RegStatusEffectID_NumBox.Enabled = false;
+            RegStatusEffectID_StrBox.Enabled = false;
+            RegStatusEffectArg1Box.Enabled = false;
+            RegStatusEffectArg2Box.Enabled = false;
+            RegStatusEffectArg3Box.Enabled = false;
+        }
+
+        private void DisableBOModifySection() {
+            currentIndexDisplayedBO = -1;
+            BOStatusEffectID_NumBox.Enabled = false;
+            BOStatusEffectID_StrBox.Enabled = false;
+            BOStatusEffectArg1Box.Enabled = false;
+            BOStatusEffectArg2Box.Enabled = false;
+            BOStatusEffectArg3Box.Enabled = false;
+        }
+
         private void RegStatusEffectID_StrBoxItemChanged(object sender, EventArgs e) {
             RegStatusEffectType type = (RegStatusEffectType)RegStatusEffectID_StrBox.SelectedItem;
             RegStatusEffectID_NumBox.Value = (short)type;
@@ -173,42 +183,52 @@ namespace CS3_TableEditor.Forms {
 
         private void RegStatusEffect1MoveLeftBtn_Click(object sender, EventArgs e) {
             regStatusEffectGroupBoxCollection.MoveLeft(0);
+            DisableRegModifySection();
         }
 
         private void RegStatusEffect1MoveRightBtn_Click(object sender, EventArgs e) {
             regStatusEffectGroupBoxCollection.MoveRight(0);
+            DisableRegModifySection();
         }
 
         private void RegStatusEffect2MoveLeftBtn_Click(object sender, EventArgs e) {
             regStatusEffectGroupBoxCollection.MoveLeft(1);
+            DisableRegModifySection();
         }
 
         private void RegStatusEffect2MoveRightBtn_Click(object sender, EventArgs e) {
             regStatusEffectGroupBoxCollection.MoveRight(1);
+            DisableRegModifySection();
         }
 
         private void RegStatusEffect3MoveLeftBtn_Click(object sender, EventArgs e) {
             regStatusEffectGroupBoxCollection.MoveLeft(2);
+            DisableRegModifySection();
         }
 
         private void RegStatusEffect3MoveRightBtn_Click(object sender, EventArgs e) {
             regStatusEffectGroupBoxCollection.MoveRight(2);
+            DisableRegModifySection();
         }
 
         private void RegStatusEffect4MoveLeftBtn_Click(object sender, EventArgs e) {
             regStatusEffectGroupBoxCollection.MoveLeft(3);
+            DisableRegModifySection();
         }
 
         private void RegStatusEffect4MoveRightBtn_Click(object sender, EventArgs e) {
             regStatusEffectGroupBoxCollection.MoveRight(3);
+            DisableRegModifySection();
         }
 
         private void RegStatusEffect5MoveLeftBtn_Click(object sender, EventArgs e) {
             regStatusEffectGroupBoxCollection.MoveLeft(4);
+            DisableRegModifySection();
         }
 
         private void RegStatusEffect5MoveRightBtn_Click(object sender, EventArgs e) {
             regStatusEffectGroupBoxCollection.MoveRight(4);
+            DisableRegModifySection();
         }
 
         private void CancelBtn_Click(object sender, EventArgs e) {
@@ -229,6 +249,78 @@ namespace CS3_TableEditor.Forms {
 
         private void BOStatusEffect1ModifyBtn_Click(object sender, EventArgs e) {
             SetupBOStatusEffectModifyArea(0);
+        }
+
+        private void BOStatusEffect2ModifyBtn_Click(object sender, EventArgs e) {
+            SetupBOStatusEffectModifyArea(1);
+        }
+
+        private void BOStatusEffect3ModifyBtn_Click(object sender, EventArgs e) {
+            SetupBOStatusEffectModifyArea(2);
+        }
+
+        private void BOStatusEffect4ModifyBtn_Click(object sender, EventArgs e) {
+            SetupBOStatusEffectModifyArea(3);
+        }
+
+        private void BOStatusEffect5ModifyBtn_Click(object sender, EventArgs e) {
+            SetupBOStatusEffectModifyArea(4);
+        }
+
+        private void BOStatusEffect1MoveLeftBtn_Click(object sender, EventArgs e) {
+            boStatusEffectGroupBoxCollection.MoveLeft(0);
+            DisableBOModifySection();
+        }
+
+        private void BOStatusEffect1MoveRightBtn_Click(object sender, EventArgs e) {
+            boStatusEffectGroupBoxCollection.MoveRight(0);
+            DisableBOModifySection();
+        }
+
+        private void BOStatusEffect2MoveLeftBtn_Click(object sender, EventArgs e) {
+            boStatusEffectGroupBoxCollection.MoveLeft(1);
+            DisableBOModifySection();
+        }
+
+        private void BOStatusEffect2MoveRightBtn_Click(object sender, EventArgs e) {
+            boStatusEffectGroupBoxCollection.MoveRight(1);
+            DisableBOModifySection();
+        }
+
+        private void BOStatusEffect3MoveLeftBtn_Click(object sender, EventArgs e) {
+            boStatusEffectGroupBoxCollection.MoveLeft(2);
+            DisableBOModifySection();
+        }
+
+        private void BOStatusEffect3MoveRightBtn_Click(object sender, EventArgs e) {
+            boStatusEffectGroupBoxCollection.MoveRight(2);
+            DisableBOModifySection();
+        }
+
+        private void BOStatusEffect4MoveLeftBtn_Click(object sender, EventArgs e) {
+            boStatusEffectGroupBoxCollection.MoveLeft(3);
+            DisableBOModifySection();
+        }
+
+        private void BOStatusEffect4MoveRightBtn_Click(object sender, EventArgs e) {
+            boStatusEffectGroupBoxCollection.MoveRight(3);
+            DisableBOModifySection();
+        }
+
+        private void BOStatusEffect5MoveLeftBtn_Click(object sender, EventArgs e) {
+            boStatusEffectGroupBoxCollection.MoveLeft(4);
+            DisableBOModifySection();
+        }
+
+        private void BOStatusEffect5MoveRightBtn_Click(object sender, EventArgs e) {
+            boStatusEffectGroupBoxCollection.MoveRight(4);
+            DisableBOModifySection();
+        }
+
+        private void BOStatusEffectsNewBtn_Click(object sender, EventArgs e) {
+            int newIndex = boStatusEffects.Select(i => i.Id == 0).ToList().IndexOf(true);
+            if (newIndex < 0) return;
+            SetupBOStatusEffectModifyArea(newIndex);
         }
     }
 }
