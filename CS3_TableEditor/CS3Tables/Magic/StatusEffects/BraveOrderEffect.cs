@@ -16,6 +16,10 @@ namespace CS3_TableEditor.CS3Tables.Magic.StatusEffects {
             }
         }
 
+        public override short GetID() { return (short)Id; }
+        public override string GetIDString() { return Id.ToString(); }
+
+        public BraveOrderEffect() : base() { }
         public BraveOrderEffect(List<byte> statusEffectData) : base(statusEffectData) { }
 
     }

@@ -16,19 +16,18 @@ namespace CS3_TableEditor.Forms {
         private MagicRecord magicRecord;
         private MagicboRecord magicboRecord;
 
-        private RegStatusEffectGroupBoxCollection regStatusEffectGroupBoxCollection;
-        private List<RegStatusEffect> regStatusEffects;
-        private BOStatusEffectGroupBoxCollection boStatusEffectGroupBoxCollection;
-        private List<BraveOrderEffect> boStatusEffects;
+        private StatusEffectGroupBoxCollection<RegStatusEffect> regStatusEffectGroupBoxCollection;
+        //private List<RegStatusEffect> regStatusEffects;
+        private StatusEffectGroupBoxCollection<BraveOrderEffect> boStatusEffectGroupBoxCollection;
+        //private List<BraveOrderEffect> boStatusEffects;
 
         private int currentIndexDisplayedReg;
         private int currentIndexDisplayedBO;
 
         public MagicStatusEffectsForm(MagicRecord magicRecord) {
             this.magicRecord = magicRecord; magicboRecord = magicRecord.MagicboRecord;
-            regStatusEffects = magicRecord.StatusEffects.Select(i => new RegStatusEffect(i.ToBytes())).ToList();
-            if(magicboRecord != null)
-                boStatusEffects = magicboRecord.BraveOrderEffects.Select(i => new BraveOrderEffect(i.ToBytes())).ToList();
+            List<RegStatusEffect> regStatusEffects = magicRecord.StatusEffects.Select(i => new RegStatusEffect(i.ToBytes())).ToList();
+            List<BraveOrderEffect> boStatusEffects = null;
             currentIndexDisplayedBO = -1;
             InitializeComponent();
 
@@ -39,12 +38,15 @@ namespace CS3_TableEditor.Forms {
                 new StatusEffectGroupBoxContents(RegStatusEffect4GroupBox, RegStatusEffect4TextBox),
                 new StatusEffectGroupBoxContents(RegStatusEffect5GroupBox, RegStatusEffect5TextBox)
             };
-            regStatusEffectGroupBoxCollection = new RegStatusEffectGroupBoxCollection(regStatusEffects, StatusEffectTooltip, RegStatusEffectsNewBtn, regCollection);
+            regStatusEffectGroupBoxCollection = 
+                new StatusEffectGroupBoxCollection<RegStatusEffect>(regStatusEffects, StatusEffectTooltip, RegStatusEffectsNewBtn, regCollection);
             RegStatusEffectID_NumBox.Minimum = short.MinValue;
             RegStatusEffectID_NumBox.Maximum = short.MaxValue;
             RegStatusEffectType[] regStatusEffectTypesArray = (RegStatusEffectType[])Enum.GetValues(typeof(RegStatusEffectType));
             List<RegStatusEffectType> statusEffectTypes = regStatusEffectTypesArray.OrderBy(i => i.ToString()).ToList();
+            RegStatusEffectID_StrBox.SelectedIndexChanged -= RegStatusEffectID_StrBoxItemChanged;
             RegStatusEffectID_StrBox.DataSource = statusEffectTypes;
+            RegStatusEffectID_StrBox.SelectedIndexChanged += RegStatusEffectID_StrBoxItemChanged;
             RegStatusEffectArg1Box.Minimum = int.MinValue;
             RegStatusEffectArg1Box.Maximum = int.MaxValue;
             RegStatusEffectArg2Box.Minimum = int.MinValue;
@@ -53,7 +55,9 @@ namespace CS3_TableEditor.Forms {
             RegStatusEffectArg3Box.Maximum = int.MaxValue;
             DisableRegModifySection();
 
-            if(boStatusEffects == null) {
+            if (magicboRecord != null)
+                boStatusEffects = magicboRecord.BraveOrderEffects.Select(i => new BraveOrderEffect(i.ToBytes())).ToList();
+            if (boStatusEffects == null) {
                 BOStatusEffectsGroupBox.Enabled = false; return;
             }
 
@@ -64,10 +68,13 @@ namespace CS3_TableEditor.Forms {
                 new StatusEffectGroupBoxContents(BOStatusEffect4GroupBox, BOStatusEffect4TextBox),
                 new StatusEffectGroupBoxContents(BOStatusEffect5GroupBox, BOStatusEffect5TextBox),
             };
-            boStatusEffectGroupBoxCollection = new BOStatusEffectGroupBoxCollection(boStatusEffects, StatusEffectTooltip, BOStatusEffectsNewBtn, boCollection);
+            boStatusEffectGroupBoxCollection = 
+                new StatusEffectGroupBoxCollection<BraveOrderEffect>(boStatusEffects, StatusEffectTooltip, BOStatusEffectsNewBtn, boCollection);
             BOStatusEffectID_NumBox.Minimum = short.MinValue;
             BOStatusEffectID_NumBox.Maximum = short.MaxValue;
+            BOStatusEffectID_StrBox.SelectedIndexChanged -= BOStatusEffectID_StrBoxItemChanged;
             BOStatusEffectID_StrBox.DataSource = Enum.GetValues(typeof(BraveOrderEffectType));
+            BOStatusEffectID_StrBox.SelectedIndexChanged += BOStatusEffectID_StrBoxItemChanged;
             BOStatusEffectArg1Box.Minimum = int.MinValue;
             BOStatusEffectArg1Box.Maximum = int.MaxValue;
             BOStatusEffectArg2Box.Minimum = int.MinValue;
@@ -78,6 +85,7 @@ namespace CS3_TableEditor.Forms {
         }
 
         private void SetupRegStatusEffectModifyArea(int index) {
+            List<RegStatusEffect> regStatusEffects = regStatusEffectGroupBoxCollection.StatusEffects;
             if(currentIndexDisplayedReg >= 0) {
                 regStatusEffects[currentIndexDisplayedReg].Id = (RegStatusEffectType)RegStatusEffectID_NumBox.Value;
                 regStatusEffects[currentIndexDisplayedReg].Argument1 = (int)RegStatusEffectArg1Box.Value;
@@ -102,6 +110,7 @@ namespace CS3_TableEditor.Forms {
         }
 
         private void SetupBOStatusEffectModifyArea(int index) {
+            List<BraveOrderEffect> boStatusEffects = boStatusEffectGroupBoxCollection.StatusEffects;
             if (currentIndexDisplayedBO >= 0) {
                 boStatusEffects[currentIndexDisplayedBO].Id = (BraveOrderEffectType)BOStatusEffectID_NumBox.Value;
                 boStatusEffects[currentIndexDisplayedBO].Argument1 = (int)BOStatusEffectArg1Box.Value;
@@ -127,11 +136,11 @@ namespace CS3_TableEditor.Forms {
 
         private void SaveBtn_Click(object sender, EventArgs e) {
             SetupRegStatusEffectModifyArea(-1);
-            magicRecord.StatusEffects = regStatusEffects;
+            magicRecord.StatusEffects = regStatusEffectGroupBoxCollection.StatusEffects;
             regStatusEffectGroupBoxCollection.ZeroStatusEffectsWithNullID();
             if (magicboRecord != null) {
                 SetupBOStatusEffectModifyArea(-1);
-                magicboRecord.BraveOrderEffects = boStatusEffects;
+                magicboRecord.BraveOrderEffects = boStatusEffectGroupBoxCollection.StatusEffects;
                 boStatusEffectGroupBoxCollection.ZeroStatusEffectsWithNullID();
             }
             Close();
@@ -159,6 +168,7 @@ namespace CS3_TableEditor.Forms {
             RegStatusEffectType type = (RegStatusEffectType)RegStatusEffectID_StrBox.SelectedItem;
             RegStatusEffectID_NumBox.Value = (short)type;
             SetupRegStatusEffectModifyArea(currentIndexDisplayedReg);
+            if (type == 0) DisableRegModifySection();
         }
 
         private void RegStatusEffect1ModifyBtn_Click(object sender, EventArgs e) {
@@ -236,7 +246,7 @@ namespace CS3_TableEditor.Forms {
         }
 
         private void RegStatusEffectsNewBtn_Click(object sender, EventArgs e) {
-            int newIndex = regStatusEffects.Select(i => i.Id == 0).ToList().IndexOf(true);
+            int newIndex = regStatusEffectGroupBoxCollection.StatusEffects.Select(i => i.Id == 0).ToList().IndexOf(true);
             if (newIndex < 0) return;
             SetupRegStatusEffectModifyArea(newIndex);
         }
@@ -245,6 +255,7 @@ namespace CS3_TableEditor.Forms {
             BraveOrderEffectType type = (BraveOrderEffectType)BOStatusEffectID_StrBox.SelectedItem;
             BOStatusEffectID_NumBox.Value = (short)type;
             SetupBOStatusEffectModifyArea(currentIndexDisplayedBO);
+            if (type == 0) DisableBOModifySection();
         }
 
         private void BOStatusEffect1ModifyBtn_Click(object sender, EventArgs e) {
@@ -318,7 +329,7 @@ namespace CS3_TableEditor.Forms {
         }
 
         private void BOStatusEffectsNewBtn_Click(object sender, EventArgs e) {
-            int newIndex = boStatusEffects.Select(i => i.Id == 0).ToList().IndexOf(true);
+            int newIndex = boStatusEffectGroupBoxCollection.StatusEffects.Select(i => i.Id == 0).ToList().IndexOf(true);
             if (newIndex < 0) return;
             SetupBOStatusEffectModifyArea(newIndex);
         }

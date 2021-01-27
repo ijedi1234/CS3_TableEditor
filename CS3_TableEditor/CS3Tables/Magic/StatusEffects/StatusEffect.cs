@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace CS3_TableEditor.CS3Tables.Magic.StatusEffects {
-    public class StatusEffect {
+    public abstract class StatusEffect {
 
         public const int SIZE = 14;
         public const int FIELD_EFFECTS_PER_ROW = 5;
@@ -13,6 +13,9 @@ namespace CS3_TableEditor.CS3Tables.Magic.StatusEffects {
 
         protected ReadBytesConverter rbc; //Using a separate version since size is accounted for.
         protected List<byte> data;
+
+        public abstract short GetID();
+        public abstract string GetIDString();
 
         public int Argument1 {
             get {
@@ -46,6 +49,11 @@ namespace CS3_TableEditor.CS3Tables.Magic.StatusEffects {
             }
         }
 
+        public StatusEffect() {
+            rbc = new ReadBytesConverter();
+            data = new List<byte>();
+            for (int i = 0; i < SIZE; i++) data.Add(0);
+        }
 
         public StatusEffect(List<byte> statusEffectData) {
             rbc = new ReadBytesConverter();
